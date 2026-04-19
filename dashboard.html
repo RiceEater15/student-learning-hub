@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Lincoln East Learning Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon small">
+        <svg width="22" height="22" viewBox="0 0 36 36" fill="none">
+          <path d="M18 3L33 12V24L18 33L3 24V12L18 3Z" stroke="var(--accent)" stroke-width="2" fill="none"/>
+          <circle cx="18" cy="18" r="4" fill="var(--accent)"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-school-sm">Lincoln East</span>
+        <span class="brand-hub-sm">Learning Hub</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <p class="nav-section-label">Main</p>
+      <a href="dashboard.html" class="nav-item active" data-page="dashboard">
+        <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="appointments.html" class="nav-item" data-page="appointments">
+        <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 2v4M14 2v4M2 9h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Appointments</span>
+        <span class="nav-badge" id="appt-count">0</span>
+      </a>
+
+      <p class="nav-section-label">Progress</p>
+      <a href="#" class="nav-item" data-page="subjects">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M3 10l4 4 10-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Subjects</span>
+      </a>
+      <a href="#" class="nav-item" data-page="goals">
+        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3.5" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="1" fill="currentColor"/></svg>
+        <span>Goals</span>
+      </a>
+      <a href="#" class="nav-item" data-page="resources">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M4 4h12v14H4z" stroke="currentColor" stroke-width="1.5" rx="1"/><path d="M7 8h6M7 11h6M7 14h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Resources</span>
+      </a>
+
+      <p class="nav-section-label">Account</p>
+      <a href="#" class="nav-item" data-page="settings">
+        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar" id="sidebar-avatar">?</div>
+        <div class="user-info">
+          <span class="user-name" id="sidebar-name">Student</span>
+          <span class="user-grade" id="sidebar-grade">Grade —</span>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="handleLogout()" title="Sign Out">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M13 10H3M10 7l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M7 5H5a1 1 0 00-1 1v8a1 1 0 001 1h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-btn" onclick="toggleSidebar()">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="page-title">
+          <h1 id="page-heading">Dashboard</h1>
+          <p id="page-subheading">Welcome back! Here's your overview.</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date" id="topbar-date"></div>
+        <button class="icon-btn" title="Notifications">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 2.5a5.5 5.5 0 015.5 5.5v3l1.5 2H3l1.5-2V8A5.5 5.5 0 0110 2.5z" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 16.5a1.5 1.5 0 003 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <!-- Stat Cards -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 2v4M14 2v4M2 9h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="stat-info">
+            <p class="stat-value" id="stat-total-appts">0</p>
+            <p class="stat-label">Total Sessions</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M3 10l4 4 10-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="stat-info">
+            <p class="stat-value" id="stat-completed">0</p>
+            <p class="stat-label">Completed</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon yellow">
+            <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 7v4l2.5 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="stat-info">
+            <p class="stat-value" id="stat-upcoming">0</p>
+            <p class="stat-label">Upcoming</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M10 2l2.4 5.1 5.6.8-4 3.9.9 5.6L10 15l-4.9 2.4.9-5.6L2 7.9l5.6-.8L10 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="stat-info">
+            <p class="stat-value" id="stat-streak">0</p>
+            <p class="stat-label">Day Streak</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two Column Row -->
+      <div class="two-col">
+        <!-- Upcoming Appointments -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Upcoming Appointments</h3>
+            <a href="appointments.html" class="card-link">View all →</a>
+          </div>
+          <div id="upcoming-list" class="appt-mini-list">
+            <div class="empty-state">
+              <svg viewBox="0 0 40 40" fill="none" class="empty-icon"><rect x="4" y="8" width="32" height="28" rx="4" stroke="var(--text-muted)" stroke-width="1.5"/><path d="M12 4v8M28 4v8M4 18h32" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <p>No upcoming sessions</p>
+              <a href="appointments.html" class="btn-secondary" style="width:auto;margin-top:8px;font-size:0.82rem;padding:8px 16px;">Book a session</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subject Progress -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Subject Focus</h3>
+            <span class="badge badge-blue">This Month</span>
+          </div>
+          <div class="subject-progress-list" id="subject-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Recent Activity</h3>
+        </div>
+        <div class="activity-list" id="activity-list">
+          <div class="empty-state">
+            <p style="color:var(--text-muted);font-size:0.88rem;">No recent activity yet. Book your first session!</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="js/auth-guard.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

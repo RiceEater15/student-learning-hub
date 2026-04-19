@@ -1,0 +1,168 @@
+/* ===========================
+   global.css — shared tokens
+   =========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Core palette */
+  --bg-base:        #0d0f14;
+  --bg-surface:     #131720;
+  --bg-card:        #181d28;
+  --bg-elevated:    #1e2535;
+  --border:         #252d40;
+  --border-light:   #2e3852;
+
+  /* Blues */
+  --accent:         #4a90e2;
+  --accent-bright:  #5fa8ff;
+  --accent-muted:   #2d5f99;
+  --accent-glow:    rgba(74, 144, 226, 0.18);
+
+  /* Text */
+  --text-primary:   #e8edf7;
+  --text-secondary: #8a97b0;
+  --text-muted:     #4d5a72;
+  --text-white:     #ffffff;
+
+  /* Status */
+  --success:        #34d399;
+  --warning:        #fbbf24;
+  --danger:         #f87171;
+
+  /* Radius */
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  18px;
+  --radius-xl:  24px;
+
+  /* Shadows */
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md:  0 8px 24px rgba(0,0,0,0.4);
+  --shadow-lg:  0 16px 48px rgba(0,0,0,0.5);
+  --glow-blue:  0 0 24px rgba(74,144,226,0.25);
+
+  /* Transitions */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Shared background grid */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(74,144,226,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,144,226,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-glow {
+  position: fixed;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(74,144,226,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-muted); }
+
+/* Utility */
+.hidden { display: none !important; }
+
+/* Shared button */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 24px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.01em;
+}
+.btn-primary svg { width: 18px; height: 18px; transition: transform 0.2s var(--ease); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(74,144,226,0.4); }
+.btn-primary:hover svg { transform: translateX(3px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--accent);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1.5px solid var(--accent-muted);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+.btn-secondary:hover { background: var(--accent-glow); border-color: var(--accent); }
+
+/* Card base */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.badge-blue   { background: rgba(74,144,226,0.15); color: var(--accent-bright); }
+.badge-green  { background: rgba(52,211,153,0.12); color: var(--success); }
+.badge-yellow { background: rgba(251,191,36,0.12); color: var(--warning); }
+.badge-red    { background: rgba(248,113,113,0.12); color: var(--danger); }
