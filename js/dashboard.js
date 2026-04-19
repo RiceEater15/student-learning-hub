@@ -87,9 +87,9 @@ function loadSubjectProgress() {
   // Default subjects if none
   const defaultSubjects = [
     { name: 'Mathematics',  sessions: 0 },
-    { name: 'English',      sessions: 0 },
-    { name: 'Science',      sessions: 0 },
-    { name: 'History',      sessions: 0 },
+    { name: 'American Lit',      sessions: 0 },
+    { name: 'FUCK MISS MEINTS',      sessions: 0 },
+    { name: 'AP Human (LONG LIVE MISS MATTHEWS)',      sessions: 0 },
   ];
 
   let subjects = Object.entries(tally).map(([name, sessions]) => ({ name, sessions }));
