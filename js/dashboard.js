@@ -8,21 +8,21 @@ import {
 
 // ── Available courses catalogue ───────────────────────────────────────────────
 const COURSE_CATALOGUE = [
-  { id: "math-alg2",   name: "Algebra II",         dept: "Mathematics",  credits: 5.0, icon: "📊" },
-  { id: "math-precalc",name: "Pre-Calculus",        dept: "Mathematics",  credits: 5.0, icon: "📊" },
-  { id: "math-calc",   name: "AP Calculus AB",      dept: "Mathematics",  credits: 5.0, icon: "📊" },
-  { id: "eng-comp",    name: "English Composition", dept: "English",      credits: 5.0, icon: "✏️" },
-  { id: "eng-lit",     name: "AP Literature",       dept: "English",      credits: 5.0, icon: "✏️" },
-  { id: "sci-bio",     name: "Biology",             dept: "Science",      credits: 5.0, icon: "🧬" },
-  { id: "sci-chem",    name: "Chemistry",           dept: "Science",      credits: 5.0, icon: "⚗️" },
-  { id: "sci-phys",    name: "AP Physics",          dept: "Science",      credits: 5.0, icon: "⚡" },
-  { id: "his-us",      name: "US History",          dept: "History",      credits: 5.0, icon: "🇺🇸" },
-  { id: "his-world",   name: "AP World History",    dept: "History",      credits: 5.0, icon: "🌍" },
-  { id: "cs-intro",    name: "Intro to CS",         dept: "Computer Sci", credits: 5.0, icon: "💻" },
-  { id: "cs-ap",       name: "AP Computer Science", dept: "Computer Sci", credits: 5.0, icon: "💻" },
-  { id: "lang-span",   name: "Spanish III",         dept: "Language",     credits: 5.0, icon: "🇪🇸" },
-  { id: "lang-french", name: "French II",           dept: "Language",     credits: 5.0, icon: "🇫🇷" },
-  { id: "art-studio",  name: "Studio Art",          dept: "Fine Arts",    credits: 5.0, icon: "🎨" },
+  { id: "math-alg2",   name: "Algebra II",         dept: "Mathematics",  credits: 5.0,},
+  { id: "math-precalc",name: "Pre-Calculus",        dept: "Mathematics",  credits: 5.0,},
+  { id: "math-calc",   name: "AP Calculus AB",      dept: "Mathematics",  credits: 5.0,},
+  { id: "eng-comp",    name: "English Composition", dept: "English",      credits: 5.0,},
+  { id: "eng-lit",     name: "AP Literature",       dept: "English",      credits: 5.0,},
+  { id: "sci-bio",     name: "Biology",             dept: "Science",      credits: 5.0,},
+  { id: "sci-chem",    name: "Chemistry",           dept: "Science",      credits: 5.0,},
+  { id: "sci-phys",    name: "AP Physics",          dept: "Science",      credits: 5.0,},
+  { id: "his-us",      name: "US History",          dept: "History",      credits: 5.0,},
+  { id: "his-world",   name: "AP World History",    dept: "History",      credits: 5.0,},
+  { id: "cs-intro",    name: "Intro to CS",         dept: "Computer Sci", credits: 5.0,},
+  { id: "cs-ap",       name: "AP Computer Science", dept: "Computer Sci", credits: 5.0,},
+  { id: "lang-span",   name: "Spanish III",         dept: "Language",     credits: 5.0,},
+  { id: "lang-french", name: "French II",           dept: "Language",     credits: 5.0,},
+  { id: "art-studio",  name: "Studio Art",          dept: "Fine Arts",    credits: 5.0,},
 ];
 
 let _uid = null;
