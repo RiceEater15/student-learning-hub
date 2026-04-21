@@ -1,45 +1,81 @@
-// js/auth-guard.js
-// Redirect to login if no session. Replace with Firebase auth check later.
+// js/auth-guard.js — Firebase Auth guard for protected pages
 
-(function () {
-  const user = JSON.parse(localStorage.getItem('leHub_user') || 'null');
-  if (!user) {
-    window.location.replace('index.html');
-    return;
-  }
+import { auth, db } from "./firebase-config.js";
+import {
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  doc,
+  getDoc,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // Populate sidebar user info
-  const nameEl   = document.getElementById('sidebar-name');
-  const gradeEl  = document.getElementById('sidebar-grade');
-  const avatarEl = document.getElementById('sidebar-avatar');
+// ── Auth state listener ───────────────────────────────────────────────────────
+// Exported so dashboard.js can react once the user is confirmed loaded
+export const authReady = new Promise((resolve) => {
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.replace("index.html");
+      resolve(null);
+      return;
+    }
 
-  if (nameEl)   nameEl.textContent  = user.name || 'Student';
-  if (gradeEl)  gradeEl.textContent = user.grade ? `Grade ${user.grade}` : '—';
-  if (avatarEl) avatarEl.textContent = (user.name || 'S').charAt(0).toUpperCase();
+    // Fetch Firestore profile for grade / extra info
+    let profile = {};
+    try {
+      const snap = await getDoc(doc(db, "users", user.uid));
+      if (snap.exists()) profile = snap.data();
+    } catch (_) { /* Firestore read failed — fall back to Auth data */ }
 
-  // Set topbar date
-  const dateEl = document.getElementById('topbar-date');
-  if (dateEl) {
-    const now = new Date();
-    dateEl.textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-  }
+    const displayName = profile.displayName || user.displayName || user.email.split("@")[0];
+    const grade       = profile.grade || "";
+    const photoURL    = profile.photoURL || user.photoURL || "";
 
-  // Update appointment badge
-  const appts = JSON.parse(localStorage.getItem('leHub_appointments') || '[]');
-  const upcoming = appts.filter(a => a.status !== 'completed' && new Date(a.date) >= new Date());
-  const badge = document.getElementById('appt-count');
-  if (badge) {
-    badge.textContent = upcoming.length > 0 ? upcoming.length : '';
-    badge.style.display = upcoming.length > 0 ? 'flex' : 'none';
-  }
-})();
+    // ── Populate sidebar UI ──
+    const nameEl   = document.getElementById("sidebar-name");
+    const gradeEl  = document.getElementById("sidebar-grade");
+    const avatarEl = document.getElementById("sidebar-avatar");
 
-function handleLogout() {
-  localStorage.removeItem('leHub_user');
-  window.location.href = 'index.html';
-}
+    if (nameEl)   nameEl.textContent  = displayName;
+    if (gradeEl)  gradeEl.textContent = grade ? `Grade ${grade}` : "—";
+    if (avatarEl) {
+      if (photoURL) {
+        avatarEl.style.background = "none";
+        avatarEl.innerHTML = `<img src="${photoURL}" alt="avatar"
+          style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />`;
+      } else {
+        avatarEl.textContent = displayName.charAt(0).toUpperCase();
+      }
+    }
 
-function toggleSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  sidebar.classList.toggle('open');
-}
+    // ── Topbar date ──
+    const dateEl = document.getElementById("topbar-date");
+    if (dateEl) {
+      dateEl.textContent = new Date().toLocaleDateString("en-US", {
+        weekday: "short", month: "short", day: "numeric",
+      });
+    }
+
+    // ── Appointment badge (still localStorage until appointments get Firestore) ──
+    const appts    = JSON.parse(localStorage.getItem("leHub_appointments") || "[]");
+    const upcoming = appts.filter(a => a.status !== "completed" && new Date(a.date) >= new Date());
+    const badge    = document.getElementById("appt-count");
+    if (badge) {
+      badge.textContent    = upcoming.length > 0 ? upcoming.length : "";
+      badge.style.display  = upcoming.length > 0 ? "flex" : "none";
+    }
+
+    resolve({ user, profile: { ...profile, displayName, grade, photoURL } });
+  });
+});
+
+// ── Logout ────────────────────────────────────────────────────────────────────
+window.handleLogout = async function () {
+  await signOut(auth);
+  window.location.href = "index.html";
+};
+
+// ── Mobile sidebar toggle ─────────────────────────────────────────────────────
+window.toggleSidebar = function () {
+  document.getElementById("sidebar")?.classList.toggle("open");
+};
