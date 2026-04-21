@@ -92,8 +92,7 @@
 
 .subject-row { display: flex; flex-direction: column; gap: 6px; }
 .subject-row-top { display: flex; justify-content: space-between; align-items: center; }
-.subject-name    { font-size: 0.87rem; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 6px; }
-.subject-icon    { font-size: 0.95rem; }
+.subject-name    { font-size: 0.87rem; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; }
 .subject-sessions { font-size: 0.75rem; color: var(--text-muted); }
 
 .progress-bar-bg {
@@ -207,7 +206,6 @@
 .catalogue-card:hover    { border-color: var(--border-light); }
 .catalogue-card.enrolled { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.04); }
 
-.catalogue-icon { font-size: 1.2rem; flex-shrink: 0; width: 26px; text-align: center; }
 .catalogue-info { flex: 1; }
 .catalogue-name { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); }
 .catalogue-dept { font-size: 0.75rem; color: var(--text-muted); margin-top: 1px; }

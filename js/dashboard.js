@@ -8,21 +8,21 @@ import {
 
 // ── Available courses catalogue ───────────────────────────────────────────────
 const COURSE_CATALOGUE = [
-  { id: "math-alg2",   name: "Algebra II",         dept: "Mathematics",  credits: 5.0,},
-  { id: "math-precalc",name: "Pre-Calculus",        dept: "Mathematics",  credits: 5.0,},
-  { id: "math-calc",   name: "AP Calculus AB",      dept: "Mathematics",  credits: 5.0,},
-  { id: "eng-comp",    name: "English Composition", dept: "English",      credits: 5.0,},
-  { id: "eng-lit",     name: "AP Literature",       dept: "English",      credits: 5.0,},
-  { id: "sci-bio",     name: "Biology",             dept: "Science",      credits: 5.0,},
-  { id: "sci-chem",    name: "Chemistry",           dept: "Science",      credits: 5.0,},
-  { id: "sci-phys",    name: "AP Physics",          dept: "Science",      credits: 5.0,},
-  { id: "his-us",      name: "US History",          dept: "History",      credits: 5.0,},
-  { id: "his-world",   name: "AP World History",    dept: "History",      credits: 5.0,},
-  { id: "cs-intro",    name: "Intro to CS",         dept: "Computer Sci", credits: 5.0,},
-  { id: "cs-ap",       name: "AP Computer Science", dept: "Computer Sci", credits: 5.0,},
-  { id: "lang-span",   name: "Spanish III",         dept: "Language",     credits: 5.0,},
-  { id: "lang-french", name: "French II",           dept: "Language",     credits: 5.0,},
-  { id: "art-studio",  name: "Studio Art",          dept: "Fine Arts",    credits: 5.0,},
+  { id: "math-alg2",   name: "Algebra II",         dept: "Mathematics",  credits: 1.0 },
+  { id: "math-precalc",name: "Pre-Calculus",        dept: "Mathematics",  credits: 1.0 },
+  { id: "math-calc",   name: "AP Calculus AB",      dept: "Mathematics",  credits: 1.0 },
+  { id: "eng-comp",    name: "English Composition", dept: "English",      credits: 1.0 },
+  { id: "eng-lit",     name: "AP Literature",       dept: "English",      credits: 1.0 },
+  { id: "sci-bio",     name: "Biology",             dept: "Science",      credits: 1.0 },
+  { id: "sci-chem",    name: "Chemistry",           dept: "Science",      credits: 1.0 },
+  { id: "sci-phys",    name: "AP Physics",          dept: "Science",      credits: 1.0 },
+  { id: "his-us",      name: "US History",          dept: "History",      credits: 1.0 },
+  { id: "his-world",   name: "World History",       dept: "History",      credits: 1.0 },
+  { id: "cs-intro",    name: "Intro to CS",         dept: "Computer Sci", credits: 0.5 },
+  { id: "cs-ap",       name: "AP Computer Science", dept: "Computer Sci", credits: 1.0 },
+  { id: "lang-span",   name: "Spanish III",         dept: "Language",     credits: 1.0 },
+  { id: "lang-french", name: "French II",           dept: "Language",     credits: 1.0 },
+  { id: "art-studio",  name: "Studio Art",          dept: "Fine Arts",    credits: 0.5 },
 ];
 
 let _uid = null;
@@ -182,7 +182,7 @@ function renderSubjectFocus() {
   el.innerHTML = rows.map(r => `
     <div class="subject-row">
       <div class="subject-row-top">
-        <span class="subject-name"><span class="subject-icon">${r.icon}</span>${r.name}</span>
+        <span class="subject-name">${r.name}</span>
         <span class="subject-sessions">${r.sessions} session${r.sessions !== 1 ? "s" : ""}</span>
       </div>
       <div class="progress-bar-bg">
@@ -287,11 +287,17 @@ function buildEnrollModal() {
         <div class="catalogue-grid" id="catalogue-grid"></div>
       </div>
       <div class="modal-footer">
-        <button class="btn-secondary" onclick="closeEnrollModal()">Done</button>
+        <button class="btn-secondary" id="enroll-done-btn">Done</button>
       </div>
     </div>`;
 
   document.body.appendChild(overlay);
+
+  // Wire Done button with addEventListener — never fails regardless of module scope
+  document.getElementById("enroll-done-btn").addEventListener("click", () => {
+    overlay.classList.remove("open");
+  });
+
   renderDeptFilters();
   renderCatalogueGrid();
 }
@@ -336,7 +342,6 @@ function renderCatalogueGrid(search = "") {
     const enrolled = enrolledIds.has(c.id);
     return `
       <div class="catalogue-card${enrolled ? " enrolled" : ""}">
-        <span class="catalogue-icon">${c.icon}</span>
         <div class="catalogue-info">
           <div class="catalogue-name">${c.name}</div>
           <div class="catalogue-dept">${c.dept} · ${c.credits} credit${c.credits !== 1 ? "s" : ""}</div>
@@ -372,7 +377,6 @@ window.toggleEnroll = async function (courseId, btn) {
         courseName: course.name,
         dept:       course.dept,
         credits:    course.credits,
-        icon:       course.icon,
         enrolledAt: serverTimestamp(),
       };
       await setDoc(ref, data);
@@ -384,7 +388,7 @@ window.toggleEnroll = async function (courseId, btn) {
     if (enrolledIds.has(courseId)) {
       _enrolledCourses = _enrolledCourses.filter(c => c.courseId !== courseId);
     } else {
-      _enrolledCourses.push({ courseId, courseName: course.name, dept: course.dept, credits: course.credits, icon: course.icon, enrolledAt: new Date() });
+      _enrolledCourses.push({ courseId, courseName: course.name, dept: course.dept, credits: course.credits, enrolledAt: new Date() });
     }
     localStorage.setItem("leHub_courses", JSON.stringify(_enrolledCourses));
     showToast(isEnrolled ? `Unenrolled from ${course.name}` : `Enrolled in ${course.name}!`, isEnrolled ? "info" : "success");
