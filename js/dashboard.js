@@ -163,12 +163,11 @@ function renderSubjectFocus() {
     name: c.courseName,
     dept: c.dept,
     sessions: sessionMap[c.courseName] || 0,
-    icon: c.icon || "📚",
   }));
 
   if (rows.length === 0) {
     // No enrolled courses yet — show appointment-derived subjects
-    rows = Object.entries(sessionMap).map(([name, sessions]) => ({ name, sessions, icon: "📚", dept: "" }));
+    rows = Object.entries(sessionMap).map(([name, sessions]) => ({ name, sessions, dept: "" }));
   }
 
   if (rows.length === 0) {
