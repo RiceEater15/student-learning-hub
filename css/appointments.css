@@ -30,15 +30,10 @@
   border-radius: 8px;
   transition: all 0.2s var(--ease);
 }
-
-.filter-tab.active {
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-}
-
+.filter-tab.active { background: var(--bg-elevated); color: var(--text-primary); }
 .filter-tab:hover:not(.active) { color: var(--text-secondary); }
 
-/* ---- Appointments Grid ---- */
+/* ---- Grid ---- */
 .appts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -55,7 +50,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   animation: fadeUp 0.35s var(--ease) both;
   position: relative;
   overflow: hidden;
@@ -64,20 +59,18 @@
 .appt-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 3px;
-  height: 100%;
-  background: var(--accent);
+  top: 0; left: 0;
+  width: 3px; height: 100%;
   border-radius: 3px 0 0 3px;
 }
-
-.appt-card.completed::before { background: var(--text-muted); }
+.appt-card.pending::before   { background: var(--warning); }
 .appt-card.confirmed::before { background: var(--success); }
+.appt-card.completed::before { background: var(--text-muted); }
 
 .appt-card:hover {
   border-color: var(--border-light);
   box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .appt-card-top {
@@ -87,22 +80,13 @@
   gap: 10px;
 }
 
-.appt-card-subject {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-white);
-}
-
-.appt-card-tutor {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 3px;
-}
+.appt-card-subject { font-size: 1rem; font-weight: 700; color: var(--text-white); }
+.appt-card-tutor   { font-size: 0.8rem; color: var(--text-muted); margin-top: 3px; }
 
 .appt-card-meta {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .appt-meta-item {
@@ -112,8 +96,7 @@
   font-size: 0.82rem;
   color: var(--text-secondary);
 }
-
-.appt-meta-item svg { width: 14px; height: 14px; color: var(--text-muted); }
+.appt-meta-item svg { width: 14px; height: 14px; color: var(--text-muted); flex-shrink: 0; }
 
 .appt-notes {
   font-size: 0.82rem;
@@ -144,16 +127,15 @@
   color: var(--text-secondary);
   transition: all 0.2s;
 }
-
-.appt-btn:hover { border-color: var(--border-light); color: var(--text-primary); }
-.appt-btn.danger:hover { border-color: var(--danger); color: var(--danger); background: rgba(248,113,113,0.08); }
+.appt-btn:hover              { border-color: var(--border-light); color: var(--text-primary); }
+.appt-btn.danger:hover       { border-color: var(--danger); color: var(--danger); background: rgba(248,113,113,0.08); }
 .appt-btn.complete-btn:hover { border-color: var(--success); color: var(--success); background: rgba(52,211,153,0.08); }
 
 /* ---- Modal ---- */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.65);
   backdrop-filter: blur(4px);
   z-index: 200;
   display: flex;
@@ -164,7 +146,6 @@
   pointer-events: none;
   transition: opacity 0.25s var(--ease);
 }
-
 .modal-overlay.open {
   opacity: 1;
   pointer-events: all;
@@ -176,15 +157,12 @@
   background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg), var(--glow-blue);
-  transform: scale(0.95) translateY(16px);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(74,144,226,0.1);
+  transform: scale(0.96) translateY(14px);
   transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
   overflow: hidden;
 }
-
-.modal-overlay.open .modal {
-  transform: scale(1) translateY(0);
-}
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
 
 .modal-header {
   display: flex;
@@ -193,27 +171,18 @@
   padding: 22px 24px 18px;
   border-bottom: 1px solid var(--border);
 }
-
-.modal-header h3 {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text-white);
-}
+.modal-header h3 { font-size: 1.05rem; font-weight: 700; color: var(--text-white); }
 
 .modal-close {
-  width: 30px;
-  height: 30px;
+  width: 30px; height: 30px;
   border-radius: var(--radius-sm);
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   color: var(--text-muted);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   transition: all 0.2s;
 }
-
 .modal-close svg { width: 14px; height: 14px; }
 .modal-close:hover { color: var(--text-primary); border-color: var(--border-light); }
 
@@ -224,9 +193,42 @@
   gap: 18px;
 }
 
+/* Input groups inside modal */
+.modal-body .input-group       { display: flex; flex-direction: column; gap: 7px; }
+.modal-body .input-group label { font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.02em; }
+.modal-body .input-wrap        { position: relative; }
+.modal-body .input-row         { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
 .modal-body .input-wrap input,
 .modal-body .input-wrap select {
-  padding-left: 14px;
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  appearance: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+.modal-body .input-wrap input:focus,
+.modal-body .input-wrap select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.modal-body .input-wrap input::placeholder { color: var(--text-muted); }
+
+.modal-body .select-wrap { position: relative; }
+.modal-body .select-arrow {
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  width: 16px; height: 16px;
+  color: var(--text-muted);
+  pointer-events: none;
 }
 
 .modal-body textarea {
@@ -242,13 +244,12 @@
   min-height: 80px;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
 }
-
 .modal-body textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-glow);
 }
-
 .modal-body textarea::placeholder { color: var(--text-muted); }
 
 .modal-footer {
@@ -258,12 +259,14 @@
   border-top: 1px solid var(--border);
 }
 
-/* Animations */
+/* ---- Animations ---- */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ---- Responsive ---- */
 @media (max-width: 600px) {
   .appts-grid { grid-template-columns: 1fr; }
+  .modal-body .input-row { grid-template-columns: 1fr; }
 }

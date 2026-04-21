@@ -14,7 +14,6 @@
 <body>
   <div class="bg-grid"></div>
 
-  <!-- Sidebar (same structure) -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-icon small">
@@ -49,7 +48,7 @@
         <span>Goals</span>
       </a>
       <a href="#" class="nav-item">
-        <svg viewBox="0 0 20 20" fill="none"><path d="M4 4h12v14H4z" stroke="currentColor" stroke-width="1.5" rx="1"/><path d="M7 8h6M7 11h6M7 14h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 20 20" fill="none"><path d="M4 4h12v14H4z" stroke="currentColor" stroke-width="1.5"/><path d="M7 8h6M7 11h6M7 14h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <span>Resources</span>
       </a>
       <p class="nav-section-label">Account</p>
@@ -63,16 +62,15 @@
         <div class="user-avatar" id="sidebar-avatar">?</div>
         <div class="user-info">
           <span class="user-name" id="sidebar-name">Student</span>
-          <span class="user-grade" id="sidebar-grade">Grade —</span>
+          <span class="user-grade" id="sidebar-grade">—</span>
         </div>
       </div>
-      <button class="logout-btn" onclick="handleLogout()">
+      <button class="logout-btn" onclick="handleLogout()" title="Sign Out">
         <svg viewBox="0 0 20 20" fill="none"><path d="M13 10H3M10 7l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M7 5H5a1 1 0 00-1 1v8a1 1 0 001 1h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
     </div>
   </aside>
 
-  <!-- Main Content -->
   <main class="main-content">
     <header class="topbar">
       <div class="topbar-left">
@@ -94,8 +92,6 @@
     </header>
 
     <div class="page-body">
-
-      <!-- Filter Tabs -->
       <div class="filter-row">
         <div class="filter-tabs">
           <button class="filter-tab active" onclick="filterAppts('all', this)">All</button>
@@ -103,24 +99,19 @@
           <button class="filter-tab" onclick="filterAppts('completed', this)">Completed</button>
         </div>
       </div>
-
-      <!-- Appointments List -->
-      <div id="appts-container" class="appts-grid">
-        <!-- Populated by JS -->
-      </div>
+      <div id="appts-container" class="appts-grid"></div>
     </div>
   </main>
 
   <!-- Book Session Modal -->
   <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
-    <div class="modal" id="modal">
+    <div class="modal">
       <div class="modal-header">
         <h3>Book a Tutoring Session</h3>
         <button class="modal-close" onclick="closeModal()">
           <svg viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
       </div>
-
       <div class="modal-body">
         <div class="input-group">
           <label>Subject</label>
@@ -138,7 +129,6 @@
             <svg class="select-arrow" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
         </div>
-
         <div class="input-group">
           <label>Preferred Tutor (Optional)</label>
           <div class="input-wrap select-wrap">
@@ -153,12 +143,11 @@
             <svg class="select-arrow" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
         </div>
-
         <div class="input-row">
           <div class="input-group">
             <label>Date</label>
             <div class="input-wrap">
-              <input type="date" id="appt-date" />
+              <input type="date" id="appt-date"/>
             </div>
           </div>
           <div class="input-group">
@@ -177,7 +166,6 @@
             </div>
           </div>
         </div>
-
         <div class="input-group">
           <label>Notes (Optional)</label>
           <div class="input-wrap">
@@ -185,10 +173,9 @@
           </div>
         </div>
       </div>
-
       <div class="modal-footer">
         <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-        <button class="btn-primary" style="width:auto;" onclick="bookAppointment()">
+        <button class="btn-primary" id="btn-confirm-booking" style="width:auto;" onclick="bookAppointment()">
           <svg viewBox="0 0 20 20" fill="none" style="width:16px;height:16px;"><path d="M3 10l4 4 10-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Confirm Booking
         </button>
@@ -196,7 +183,7 @@
     </div>
   </div>
 
-  <script src="js/auth-guard.js"></script>
-  <script src="js/appointments.js"></script>
+  <script type="module" src="js/auth-guard.js"></script>
+  <script type="module" src="js/appointments.js"></script>
 </body>
 </html>
