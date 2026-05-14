@@ -1,5 +1,3 @@
-// js/login.js — Firebase Auth backend
-
 import { auth, db } from "./firebase-config.js";
 import {
   signInWithEmailAndPassword,
@@ -17,12 +15,10 @@ import {
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ── Auto-redirect if already signed in ──────────────────────────────────────
 onAuthStateChanged(auth, (user) => {
   if (user) window.location.replace("dashboard.html");
 });
 
-// ── Tab switching ────────────────────────────────────────────────────────────
 window.switchTab = function (tab) {
   const loginForm    = document.getElementById("form-login");
   const registerForm = document.getElementById("form-register");
@@ -45,13 +41,12 @@ window.switchTab = function (tab) {
   }
 };
 
-// ── Password visibility toggle ───────────────────────────────────────────────
 window.togglePassword = function (id) {
   const input = document.getElementById(id);
   input.type = input.type === "password" ? "text" : "password";
 };
 
-// ── Toast notifications ──────────────────────────────────────────────────────
+
 function showToast(message, type = "info") {
   const existing = document.querySelector(".toast");
   if (existing) existing.remove();
@@ -79,7 +74,6 @@ function showToast(message, type = "info") {
   setTimeout(() => toast.remove(), 4500);
 }
 
-// ── Loading state helper ─────────────────────────────────────────────────────
 function setLoading(btnId, loading, originalHTML) {
   const btn = document.getElementById(btnId);
   if (!btn) return;
@@ -87,7 +81,6 @@ function setLoading(btnId, loading, originalHTML) {
   btn.innerHTML = loading ? `<span class="spinner"></span>Working…` : originalHTML;
 }
 
-// ── Firebase error → friendly message ────────────────────────────────────────
 function friendlyError(code) {
   const map = {
     "auth/user-not-found":         "No account found with that email.",
@@ -103,7 +96,7 @@ function friendlyError(code) {
   return map[code] || "Something went wrong. Please try again.";
 }
 
-// ── Save user profile to Firestore ───────────────────────────────────────────
+
 async function saveUserToFirestore(user, extra = {}) {
   const ref      = doc(db, "users", user.uid);
   const snapshot = await getDoc(ref);
@@ -123,7 +116,7 @@ async function saveUserToFirestore(user, extra = {}) {
   }
 }
 
-// ── Email/Password Sign In ────────────────────────────────────────────────────
+
 const LOGIN_BTN_HTML = `<span>Sign In</span>
   <svg viewBox="0 0 20 20" fill="none">
     <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -146,7 +139,6 @@ window.handleLogin = async function () {
   }
 };
 
-// ── Google Sign In ────────────────────────────────────────────────────────────
 const GOOGLE_BTN_HTML = `
   <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" width="18" height="18" style="flex-shrink:0">
     <path d="M19.6 10.23c0-.68-.06-1.36-.18-2H10v3.79h5.4a4.6 4.6 0 01-2 3.02v2.5h3.24c1.9-1.75 3-4.32 3-7.31z" fill="#4285F4"/>
@@ -174,7 +166,6 @@ window.handleGoogleLogin = async function () {
   }
 };
 
-// ── Register ─────────────────────────────────────────────────────────────────
 const REG_BTN_HTML = `<span>Create Account</span>
   <svg viewBox="0 0 20 20" fill="none">
     <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -211,7 +202,6 @@ window.handleRegister = async function () {
   }
 };
 
-// ── Forgot Password ───────────────────────────────────────────────────────────
 window.handleForgotPassword = async function () {
   const email = document.getElementById("login-email").value.trim();
   if (!email) {
